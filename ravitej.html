@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .container {
+      width: 200px;
+      height: 200px;
+      margin: auto;
+      margin-top: 100px;
+      position: relative;
+    }
+
+    .container2 {
+      width: 200px;
+      height: 200px;
+      margin: auto;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    .bar {
+      width: 50px;
+      height: 50px;
+      border-radius: 25px 25px 25px 25px;
+      transition-duration: 1500ms;
+    }
+
+    #bar1 {
+      z-index: -400;
+      background-color: red;
+    }
+
+    #bar2 {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: -100;
+      background-color: yellow;
+    }
+
+    #bar4 {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      z-index: -200;
+      background-color: cyan;
+    }
+
+    #bar3 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: -300;
+      background-color: green;
+    }
+
+    button {
+      background-color: #018786;
+      padding: 5px 20px;
+      font-style: bold;
+      color: white;
+      border: 1px solid black;
+    }
+  </style>
+
+  <body>
+    <div class="container">
+      <div id="bar1" class="bar"></div>
+      <div id="bar2" class="bar"></div>
+      <div id="bar3" class="bar"></div>
+      <div id="bar4" class="bar"></div>
+    </div>
+    <div class="container2">
+      <button id="start">Start</button>
+      <button id="stop">Stop</button>
+    </div>
+  </body>
+  <script>
+    const start = document.getElementById("start");
+    const stop = document.getElementById("stop");
+    stop.disabled = true;
+    const colors = ["red", "yellow", "cyan  ", "green"];
+    let startAnimation;
+    let flag = true,
+      stopFlag = false;
+    start.addEventListener("click", () => {
+      start.disabled = true;
+      stop.disabled = false;
+      flag = true;
+      stopFlag = false;
+      const bar1 = document.getElementById("bar1");
+      const bar2 = document.getElementById("bar2");
+      const bar3 = document.getElementById("bar3");
+      const bar4 = document.getElementById("bar4");
+      startAnimation = setInterval(() => {
+        if (!stopFlag) {
+          if (flag) {
+            bar1.style.backgroundColor = `${colors[1]}`;
+            bar1.style.width = "100%";
+            bar4.style.backgroundColor = `${colors[3]}`;
+            bar4.style.width = "100%";
+            bar2.style.backgroundColor = `${colors[2]}`;
+            bar2.style.height = "100%";
+            bar3.style.backgroundColor = `${colors[0]}`;
+            bar3.style.height = "100%";
+            colors.push(colors[0]);
+            colors.shift();
+          } else {
+            bar1.style.width = "50px";
+            bar4.style.width = "50px";
+            bar2.style.height = "50px";
+            bar3.style.height = "50px";
+          }
+          flag = !flag;
+        }
+      }, 1500);
+    });
+
+    stop.addEventListener("click", () => {
+      stopFlag = true;
+      start.disabled = false;
+      stop.disabled = true;
+      clearInterval(startAnimation);
+      bar1.style.width = "50px";
+      bar1.style.borderRadius = "25px 25px 25px 25px";
+      bar4.style.width = "50px";
+      bar4.style.borderRadius = "25px 25px 25px 25px";
+      bar2.style.height = "50px";
+      bar2.style.borderRadius = "25px 25px 25px 25px";
+      bar3.style.height = "50px";
+      bar3.style.borderRadius = "25px 25px 25px 25px";
+    });
+  </script>
+</html>
